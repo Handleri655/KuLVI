@@ -57,7 +57,7 @@ export default function Home() {
         <div className="hero__media" aria-hidden="true">
           <img
             src="/hero.png"
-            alt="LVI-ammattilaiset työmaalla suunnitelmien äärellä"
+            alt="Kupariputkia — LVI- ja talotekniikka"
             className="hero__img"
           />
           <div className="hero__shade" />
