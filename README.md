@@ -24,6 +24,15 @@ Staattiset tiedostot syntyvät kansioon `dist/`.
 - **Vercel**: `vercel.json` hoitaa rewrite-säännöt
 - **GitHub Pages**: `404.html` ohjaa polut takaisin sovellukseen
 
+Vite upottaa `VITE_*` -muuttujat **build-aikana**. Tuotantoon:
+
+1. Tiedosto `.env.production` (repossa, vain julkinen anon-avain), **tai**
+2. Hostingin Environment Variables:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+
+Älä koskaan laita `service_role` -avainta frontendiin tai gittiin. Deployn jälkeen tarvitaan uusi build.
+
 ## Sivut
 
 | Polku | Sisältö |
