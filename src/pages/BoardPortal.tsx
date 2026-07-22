@@ -57,60 +57,70 @@ export default function BoardPortal() {
 
   return (
     <div ref={ref}>
-      <header className="page-hero">
+      <header className="page-hero page-hero--board">
         <div className="container">
-          <p className="eyebrow">Hallitus</p>
+          <p className="eyebrow">Sisäinen alue</p>
           <h1>Hallituksen sivu</h1>
-          <p>Pöytäkirjat ja sisäiset aineistot — vain hallituksen tunnuksilla.</p>
+          <p>
+            Vain hallitustunnuksella. Täällä ovat pöytäkirjat ja sisäiset raportit — ei
+            jäsentiedotteita.
+          </p>
         </div>
       </header>
 
       <section className="section">
-        <div className="container">
-          <div className="portal-bar reveal">
-            <p className="portal-bar__meta">
-              Kirjautunut: <strong>{fullName ?? 'Hallitus'}</strong> · rooli: hallitus
+        <div className="container portal-layout">
+          <aside className="portal-aside reveal">
+            <div className="role-badge role-badge--board">Hallitustunnus</div>
+            <p className="portal-aside__name">{fullName ?? 'Hallitus'}</p>
+            <p className="portal-aside__hint">
+              Tämä on erillinen sivu hallitukselle. Jäsentiedotteet löytyvät jäsensivulta.
             </p>
-            <div className="btn-group">
+            <div className="portal-aside__actions">
               <Link to="/jasensivu" className="btn btn--outline">
-                Jäsensivu
+                Avaa jäsensivu
               </Link>
               <button type="button" className="btn btn--outline" onClick={() => void signOut()}>
                 Kirjaudu ulos
               </button>
             </div>
-          </div>
+          </aside>
 
-          <div className="notice reveal" style={{ marginBottom: '2rem' }}>
-            <h2>Luottamuksellinen aineisto</h2>
-            <p>
-              Pöytäkirjat voivat sisältää henkilötietoja. Älä lataa tai jaa aineistoa ulkopuolisille.
-              Säilytys ja käyttö: katso <Link to="/tietosuoja">tietosuojaseloste</Link>.
-            </p>
-          </div>
-
-          <div className="reveal" style={{ marginBottom: '1.25rem' }}>
-            <p className="eyebrow">Dokumentit</p>
-            <h2 className="section-title">Pöytäkirjat &amp; raportit</h2>
-          </div>
-
-          <ul className="doc-list reveal">
-            {docs.map((doc) => (
-              <li key={doc.id} className="doc-item">
-                <span className="doc-item__tag">Hallitus</span>
-                <h3>{doc.title}</h3>
-                {doc.description && <p>{doc.description}</p>}
-              </li>
-            ))}
-          </ul>
-
-          <div className="cta-inline reveal" style={{ marginTop: '2.5rem' }}>
-            <div>
-              <h2>Julkinen hallitussivu</h2>
-              <p className="text-muted">Henkilöiden nimet ja roolit ovat julkisella sivulla.</p>
+          <div className="portal-main">
+            <div className="portal-callout portal-callout--board reveal">
+              <strong>Luottamuksellista</strong>
+              <p>
+                Älä jaa pöytäkirjoja ulkopuolisille. Katso{' '}
+                <Link to="/tietosuoja">tietosuojaseloste</Link>.
+              </p>
             </div>
-            <Link to="/hallitus" className="btn btn--outline">
-              Näytä julkinen hallitus
+
+            <div className="reveal" style={{ marginBottom: '1.25rem' }}>
+              <p className="eyebrow">1 · Hallitusaineistot</p>
+              <h2 className="section-title">Pöytäkirjat &amp; raportit</h2>
+              <p className="section-lead">Näkyvät vain hallitus-roolille.</p>
+            </div>
+
+            <ul className="doc-list reveal">
+              {docs.map((doc) => (
+                <li key={doc.id} className="doc-item doc-item--board">
+                  <span className="doc-item__tag">Hallitus</span>
+                  <h3>{doc.title}</h3>
+                  {doc.description && <p>{doc.description}</p>}
+                </li>
+              ))}
+            </ul>
+
+            <div className="reveal" style={{ margin: '2.5rem 0 1.25rem' }}>
+              <p className="eyebrow">2 · Julkinen sivu</p>
+              <h2 className="section-title">Hallituksen nimet</h2>
+              <p className="section-lead">
+                Julkinen listaus (nimet ja tehtävät) on eri sivu kuin tämä sisäinen alue.
+              </p>
+            </div>
+
+            <Link to="/hallitus" className="btn btn--outline reveal">
+              Näytä julkinen hallitus <span className="arrow">→</span>
             </Link>
           </div>
         </div>

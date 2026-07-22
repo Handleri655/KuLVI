@@ -1,0 +1,236 @@
+.cal {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  box-shadow: 0 8px 28px rgba(12, 28, 36, 0.05);
+}
+
+.cal__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.cal__title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cal__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.cal__today {
+  font-size: 0.78rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--copper-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.cal__nav {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 1.1rem;
+  color: var(--ink);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.cal__nav:hover {
+  background: var(--mist);
+  border-color: var(--copper);
+}
+
+.cal__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.cal__weekday {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+  padding: 0.35rem 0;
+}
+
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+}
+
+.cal__cell {
+  aspect-ratio: 1;
+  min-height: 2.6rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--slate);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cal__cell--empty {
+  background: transparent;
+  pointer-events: none;
+}
+
+.cal__cell--event {
+  color: var(--ink);
+  background: rgba(194, 106, 58, 0.1);
+  border-color: rgba(194, 106, 58, 0.35);
+  cursor: pointer;
+}
+
+.cal__cell--event:hover {
+  background: rgba(194, 106, 58, 0.18);
+}
+
+.cal__cell--past.cal__cell--event {
+  background: var(--mist);
+  border-color: var(--line);
+  color: var(--slate);
+}
+
+.cal__cell--today {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.cal__cell--selected {
+  background: var(--copper) !important;
+  border-color: var(--copper) !important;
+  color: var(--white) !important;
+}
+
+.cal__cell--selected .cal__dot {
+  background: var(--white);
+}
+
+.cal__cell:disabled:not(.cal__cell--event) {
+  cursor: default;
+}
+
+.cal__day {
+  line-height: 1;
+}
+
+.cal__dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--copper);
+}
+
+.cal__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--slate);
+}
+
+.cal__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cal__legend-item--today::before {
+  content: '';
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.events-cal-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.events-upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.event-card {
+  padding: 1.15rem 1.25rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  border-left: 3px solid var(--copper);
+  transition: box-shadow 0.25s ease, transform 0.25s var(--ease);
+}
+
+.event-card.is-active {
+  box-shadow: 0 10px 28px rgba(12, 28, 36, 0.08);
+  transform: translateY(-2px);
+}
+
+.event-card__date {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--copper);
+  margin-bottom: 0.35rem;
+}
+
+.event-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.event-card p {
+  color: var(--slate);
+  font-size: 0.95rem;
+}
+
+.event-card__place {
+  margin-top: 0.45rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink) !important;
+}
+
+.events-empty {
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--mist);
+  color: var(--slate);
+}
+
+@media (max-width: 860px) {
+  .events-cal-layout {
+    grid-template-columns: 1fr;
+  }
+}

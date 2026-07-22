@@ -56,8 +56,8 @@ export default function Home() {
       <section className="hero">
         <div className="hero__media" aria-hidden="true">
           <img
-            src="/hero.jpg"
-            alt=""
+            src="/hero.png"
+            alt="LVI-ammattilaiset työmaalla suunnitelmien äärellä"
             className="hero__img"
           />
           <div className="hero__shade" />

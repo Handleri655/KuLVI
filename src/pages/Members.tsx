@@ -61,70 +61,89 @@ export default function Members() {
         <div className="container">
           <p className="eyebrow">Jäsenalue</p>
           <h1>Jäsensivu</h1>
-          <p>Kirjautuneille jäsenille tarkoitetut tiedotteet ja linkit.</p>
+          <p>Yhteinen alue kaikille kirjautuneille jäsenille — tiedotteet ja hyödylliset linkit.</p>
         </div>
       </header>
 
       <section className="section">
-        <div className="container">
-          <div className="portal-bar reveal">
-            <p className="portal-bar__meta">
-              Kirjautunut: <strong>{fullName ?? 'Käyttäjä'}</strong>
-              {role ? ` · rooli: ${role === 'hallitus' ? 'hallitus' : 'jäsen'}` : ''}
+        <div className="container portal-layout">
+          <aside className="portal-aside reveal">
+            <div className={`role-badge role-badge--${role === 'hallitus' ? 'board' : 'member'}`}>
+              {role === 'hallitus' ? 'Hallitustunnus' : 'Jäsentunnus'}
+            </div>
+            <p className="portal-aside__name">{fullName ?? 'Käyttäjä'}</p>
+            <p className="portal-aside__hint">
+              {isBoard
+                ? 'Olet kirjautunut hallituksena. Tämä sivu on jäsenille yhteinen. Pöytäkirjat ovat erillisellä hallituksen sivulla.'
+                : 'Näet jäsenille tarkoitetut tiedotteet ja linkit.'}
             </p>
-            <div className="btn-group">
+            <div className="portal-aside__actions">
               {isBoard && (
-                <Link to="/hallituksen-sivu" className="btn btn--outline">
-                  Hallituksen sivu
+                <Link to="/hallituksen-sivu" className="btn btn--primary">
+                  Siirry hallituksen sivulle <span className="arrow">→</span>
                 </Link>
               )}
               <button type="button" className="btn btn--outline" onClick={() => void signOut()}>
                 Kirjaudu ulos
               </button>
             </div>
-          </div>
+          </aside>
 
-          <div className="notice reveal" style={{ marginBottom: '2rem' }}>
-            <h2>Henkilötiedot ja aineistot</h2>
-            <p>
-              Tätä aluetta saa käyttää vain omalla tunnuksella. Älä jaa salasanaa. Lue{' '}
-              <Link to="/tietosuoja">tietosuojaseloste</Link>.
+          <div className="portal-main">
+            {isBoard && (
+              <div className="portal-callout reveal">
+                <strong>Etsitkö pöytäkirjoja?</strong>
+                <p>
+                  Ne eivät ole tällä sivulla. Avaa{' '}
+                  <Link to="/hallituksen-sivu">Hallituksen sivu</Link>.
+                </p>
+              </div>
+            )}
+
+            <div className="reveal" style={{ marginBottom: '1.25rem' }}>
+              <p className="eyebrow">1 · Tiedotteet</p>
+              <h2 className="section-title">Jäsenaineistot</h2>
+              <p className="section-lead">Kaikille jäsenille näkyvät dokumentit.</p>
+            </div>
+
+            <ul className="doc-list reveal">
+              {docs.map((doc) => (
+                <li key={doc.id} className="doc-item">
+                  <span className="doc-item__tag">Jäsen</span>
+                  <h3>{doc.title}</h3>
+                  {doc.description && <p>{doc.description}</p>}
+                </li>
+              ))}
+            </ul>
+
+            <div className="reveal" style={{ margin: '2.5rem 0 1.25rem' }}>
+              <p className="eyebrow">2 · Linkit</p>
+              <h2 className="section-title">Hyödylliset palvelut</h2>
+            </div>
+
+            <div className="benefit-grid">
+              <a
+                href="https://sulvi.fi/liity-jaseneksi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="benefit benefit--link reveal"
+              >
+                <h3>Päivitä jäsentiedot (SuLVI)</h3>
+                <p>Yhteystiedot ja laskutus SuLVI:n jäsensivuilla.</p>
+              </a>
+              <Link to="/tapahtumat" className="benefit benefit--link reveal reveal-delay-1">
+                <h3>Tapahtumat</h3>
+                <p>Kuukausikokoukset ja tilaisuudet.</p>
+              </Link>
+              <Link to="/yhteystiedot" className="benefit benefit--link reveal reveal-delay-2">
+                <h3>Yhteystiedot</h3>
+                <p>Sihteeri ja kokouspaikka.</p>
+              </Link>
+            </div>
+
+            <p className="portal-footnote reveal">
+              Käytä vain omaa tunnustasi · <Link to="/tietosuoja">Tietosuojaseloste</Link>
             </p>
-          </div>
-
-          <div className="reveal" style={{ marginBottom: '1.25rem' }}>
-            <p className="eyebrow">Aineistot</p>
-            <h2 className="section-title">Jäsenille</h2>
-          </div>
-
-          <ul className="doc-list reveal">
-            {docs.map((doc) => (
-              <li key={doc.id} className="doc-item">
-                <span className="doc-item__tag">Jäsen</span>
-                <h3>{doc.title}</h3>
-                {doc.description && <p>{doc.description}</p>}
-              </li>
-            ))}
-          </ul>
-
-          <div className="benefit-grid" style={{ marginTop: '2.5rem' }}>
-            <a
-              href="https://sulvi.fi/liity-jaseneksi/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="benefit benefit--link reveal"
-            >
-              <h3>Päivitä jäsentiedot (SuLVI)</h3>
-              <p>Yhteystiedot ja laskutus SuLVI:n jäsensivuilla.</p>
-            </a>
-            <Link to="/tapahtumat" className="benefit benefit--link reveal reveal-delay-1">
-              <h3>Tapahtumat</h3>
-              <p>Kuukausikokoukset ja tilaisuudet.</p>
-            </Link>
-            <Link to="/yhteystiedot" className="benefit benefit--link reveal reveal-delay-2">
-              <h3>Yhteystiedot</h3>
-              <p>Sihteeri ja kokouspaikka.</p>
-            </Link>
           </div>
         </div>
       </section>

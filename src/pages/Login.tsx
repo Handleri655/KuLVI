@@ -2,18 +2,35 @@ import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 import { usePageMeta } from '../hooks/usePageMeta'
+import type { UserRole } from '../lib/database.types'
 import './Auth.css'
 
 const DEMO_ACCOUNTS = [
-  { label: 'Jäsen', email: 'jasen@kulvi.demo', password: 'KulviJasen2026!' },
-  { label: 'Hallitus', email: 'hallitus@kulvi.demo', password: 'KulviHallitus2026!' },
+  {
+    label: 'Jäsen',
+    email: 'jasen@kulvi.demo',
+    password: 'KulviJasen2026!',
+    goesTo: 'Avaa jäsensivun (tiedotteet jäsenille)',
+  },
+  {
+    label: 'Hallitus',
+    email: 'hallitus@kulvi.demo',
+    password: 'KulviHallitus2026!',
+    goesTo: 'Avaa hallituksen sivun (pöytäkirjat)',
+  },
 ]
+
+function homeForRole(role: UserRole | null, fallback: string) {
+  if (role === 'hallitus') return '/hallituksen-sivu'
+  if (role === 'jasen') return '/jasensivu'
+  return fallback
+}
 
 export default function Login() {
   const { signIn, user, role, configured, ready } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const from = (location.state as { from?: string } | null)?.from ?? '/jasensivu'
+  const from = (location.state as { from?: string } | null)?.from
 
   const [email, setEmail] = useState(DEMO_ACCOUNTS[0].email)
   const [password, setPassword] = useState(DEMO_ACCOUNTS[0].password)
@@ -27,7 +44,8 @@ export default function Login() {
   })
 
   if (ready && user) {
-    const dest = role === 'hallitus' && from === '/jasensivu' ? from : from
+    const dest =
+      from && from !== '/kirjaudu' ? from : homeForRole(role, '/jasensivu')
     return <Navigate to={dest} replace />
   }
 
@@ -41,7 +59,11 @@ export default function Login() {
       setError(result.error)
       return
     }
-    navigate(from, { replace: true })
+    // Hallitus → hallituksen sivu; jäsen → jäsensivu
+    // Jos tultiin suojatulta sivulta, kunnioita sitä
+    const dest =
+      from && from !== '/kirjaudu' ? from : homeForRole(result.role, '/jasensivu')
+    navigate(dest, { replace: true })
   }
 
   return (
@@ -50,9 +72,9 @@ export default function Login() {
         <p className="eyebrow">Kirjautuminen</p>
         <h1>Jäsen- ja hallitusalue</h1>
         <p className="auth-lead">
-          Kirjautumisen takana on jäsenaineistoja ja hallituksen dokumentteja. Käytä vain omaa
-          tunnustasi. Katso myös{' '}
-          <Link to="/tietosuoja">tietosuojaseloste</Link>.
+          <strong>Jäsentunnus</strong> vie jäsensivulle.
+          <br />
+          <strong>Hallitustunnus</strong> vie suoraan hallituksen sivulle (pöytäkirjat).
         </p>
 
         {!configured && (
@@ -118,10 +140,15 @@ export default function Login() {
                 <span>
                   {acc.email} · <code>{acc.password}</code>
                 </span>
+                <span className="auth-demo__hint">{acc.goesTo}</span>
               </li>
             ))}
           </ul>
         </div>
+
+        <p className="auth-fineprint">
+          <Link to="/tietosuoja">Tietosuojaseloste</Link>
+        </p>
       </div>
     </div>
   )

@@ -67,7 +67,7 @@ export const knowledgeBase: KnowledgeChunk[] = [
       'milloin',
       'ilta',
     ],
-    text: `Kuukausikokoukset pidetään pääsääntöisesti Kuopion Klubilla, Kuninkaankatu 10, 70100 Kuopio. Jos paikka muuttuu, siitä ilmoitetaan kokouskutsussa. Syksyn 2026 kokousohjelma julkaistaan lähempänä kautta. Viimeisimpiä kokouksia: syyskokous 26.11.2025 (Koka Oy), tammikuu 21.1.2026 (Paroc), helmikuu 18.2.2026 (Vieser), klo 19. Lisätietoja tulevista tapahtumista: puheenjohtaja Jorma Kauppinen, 044 545 3158, jorma.kauppinen@granlund.fi.`,
+    text: `Kuukausikokoukset pidetään pääsääntöisesti Kuopion Klubilla, Kuninkaankatu 10. Kalenteri sivulla /tapahtumat. Tulevia: 16.9.2026, 21.10.2026, 18.11.2026 ja syyskokous 25.11.2026 klo 19. Lisätietoja: Jorma Kauppinen, 044 545 3158.`,
   },
   {
     id: 'venue',

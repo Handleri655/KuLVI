@@ -18,7 +18,10 @@ type AuthState = {
   role: UserRole | null
   fullName: string | null
   configured: boolean
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>
+  signIn: (
+    email: string,
+    password: string,
+  ) => Promise<{ error: string | null; role: UserRole | null }>
   signOut: () => Promise<void>
   isBoard: boolean
   isMember: boolean
@@ -92,10 +95,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return {
         error:
           'Supabase ei ole vielä määritetty. Lisää VITE_SUPABASE_URL ja VITE_SUPABASE_ANON_KEY tiedostoon .env',
+        role: null,
       }
     }
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    return { error: error?.message ?? null }
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error || !data.user) {
+      return { error: error?.message ?? 'Kirjautuminen epäonnistui', role: null }
+    }
+    const profile = await fetchProfile(data.user.id)
+    const nextRole = (profile?.role as UserRole | undefined) ?? null
+    setRole(nextRole)
+    setFullName(profile?.full_name ?? data.user.email ?? null)
+    return { error: null, role: nextRole }
   }, [])
 
   const signOut = useCallback(async () => {

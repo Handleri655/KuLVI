@@ -67,7 +67,7 @@ const SHORT: Record<string, ChatAnswer> = {
     links: [{ label: 'Jäsenmaksut', path: '/jasenyys' }],
   },
   events: {
-    text: 'Kuukausikokoukset yleensä Kuopion Klubilla. Syksyn 2026 ohjelma julkaistaan myöhemmin — kysy Jorma Kauppiselta.',
+    text: 'Seuraavat kokoukset: 16.9., 21.10., 18.11. ja syyskokous 25.11.2026 klo 19 Kuopion Klubilla. Katso kalenteri Tapahtumat-sivulta.',
     links: [{ label: 'Tapahtumat', path: '/tapahtumat' }],
   },
   venue: {
